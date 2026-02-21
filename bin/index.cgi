@@ -10,8 +10,8 @@ tmp=/tmp/$$
 dir="$(tr -dc 'a-zA-Z0-9_=' <<< ${QUERY_STRING} | sed 's;=;s/;')"
 [ -z "$dir" ] && dir="pages/top"
 [ "$dir" = "post" ] && dir="$(tail -n 1 "$datadir/post_list" | cut -d' ' -f 3)"
-md="$contentsdir/$dir/main.md"
-[ -f "$md" ]
+org="$contentsdir/$dir/main.org"
+[ -f "$org" ]
 
 ### MAKE MATADATA ###
 counter="$datadir/counters/$(tr '/' '_' <<< $dir)"
@@ -29,5 +29,5 @@ FIN
 
 ### OUTPUT ###
 pandoc --template="$viewdir/template.html"	\
-    -f markdown_github+yaml_metadata_block "$md" "$tmp-meta.yaml"  |
+    -f m "$org" "$tmp-meta.yaml"  |
 sed -r "/:\/\/|=\"\//!s;<(img src|a href)=\";&/$dir/;"
