@@ -1,5 +1,5 @@
 contents="myCMS_contents"
-contents_owner="hiroyukiSannomiya"
+contents_owner="ropiron"
 wwwdir="/var/www"
 contentsdir="$wwwdir/$contents"
 appdir="$wwwdir/myCMS"
