@@ -1,7 +1,7 @@
 #!/bin/bash -e
 set -o pipefail
 dir=$(dirname $0)
-work=/home/ueda/work
+work=/home/sn3y/work
 mkdir -p $work
 
 ### 下準備 ###

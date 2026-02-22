@@ -1,9 +1,11 @@
-contents="bashcms2_contents"
-contents_owner="ryuichiueda"
+contents="myCMS_contents"
+contents_owner="ropiron"
 wwwdir="/var/www"
 contentsdir="$wwwdir/$contents"
-appdir="$wwwdir/bashcms2"
+appdir="$wwwdir/myCMS"
 logdir="/var/log/$contents"
+# 修正後（テスト用）
+#logdir="/tmp"
 datadir="${contentsdir}_data"
 viewdir="$appdir/view"
 
