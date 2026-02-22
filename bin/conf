@@ -4,6 +4,8 @@ wwwdir="/var/www"
 contentsdir="$wwwdir/$contents"
 appdir="$wwwdir/myCMS"
 logdir="/var/log/$contents"
+# 修正後（テスト用）
+#logdir="/tmp"
 datadir="${contentsdir}_data"
 viewdir="$appdir/view"
 
