@@ -1,52 +1,37 @@
-Content-type: text/html
-
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <title>$title$</title>
-  <link rel="stylesheet" href="/view/default.css" />
-  <meta name="viewport" content="width=device-width" />
-  <script src="/view/main.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <meta charset="utf-8">
+    <title>$title$</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 2em; }
+        .metadata { color: #666; font-size: 0.9em; border-bottom: 1px solid #ccc; margin-bottom: 20px; }
+        .tags { display: inline-block; background: #eee; padding: 2px 8px; border-radius: 4px; margin-right: 5px; }
+	.footer { color: #666; font-size: 0.9em; border-top: 1px solid #ccc; margin-top: 20px; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 </head>
 <body>
-   <header id="page-header">
-     <hgroup>
-       <h1><a href="/">myCMSブログ</a></h1>
-       <h2>b+log</h2>
-     </hgroup>
-     <nav><ul>
-       <li><a href="/?page=top">mycms2とは? </a></li>
-       <li><a href="/?post">記事</a></li>
-       <li><a href="https://github.com/ryuichiueda/bashcms2">フォークしたリポジトリ</a></li>
-     </ul></nav>
+
+    <header>
+        <h1>$title$</h1>
+        <div class="metadata">
+            <div>
+                $for(keywords)$
+                <span class="tags">$keywords$</span>
+                $endfor$
+            </div>
+        </div>
     </header>
-    <article id="article">
-      <header id="article-header">
-      <nav>
-	$nav$<br />created: $created_time$<br />views: $views$
-      </nav>
-      </header>
-      <article id="article-body">
+
+    <main>
         $body$
-      </article>
-      <footer id="article-footer">
-        <nav>
-          created: $created_time$&nbsp;(last modified: $modified_time$)<br />views:&nbsp;keywords: <span id="keywords">$Keywords$</span>
-        </nav>
-      </footer>
-    </article>
-    <aside id="widgets">
-      <aside id="full-search"></aside>
-      <aside id="last-articles"></aside>
-      <aside id="rank-articles"></aside>
-      <footer id="page-footer">
-	<p>Copyright: $Copyright$</p>
-      </footer>
-    </aside>
+    </main>
+    <div class="footer">Copyright (C) 公開日: $date$ 著者: $author$</div>
+
 </body>
 </html>
