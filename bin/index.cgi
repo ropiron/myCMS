@@ -30,13 +30,5 @@ org="$contentsdir/$dir/main.org"
 ### OUTPUT ###
 #pandoc --template="$viewdir/template.html"	\
 #    -f markdown "$org" "$tmp-meta.yaml"  |
-pandoc "$org"  \
-#pandoc "$org" "$tmp-meta.yaml" \
-    -f org \
-    -t html \
-    --template="$viewdir/template.html" \
-    --standalone \
-    --mathjax |
-#\
-#    --embed-resources
+pandoc "$org" --from=org --to=html --template="$viewdir/template.html" --standalone --mathjax |
 sed -r "/:\/\/|=\"\//!s;<(img src|a href)=\";&/$dir/;"
