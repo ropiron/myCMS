@@ -32,8 +32,8 @@ org="$contentsdir/$dir/main.org"
 #    -f markdown "$org" "$tmp-meta.yaml"  |
 pandoc "$org"  \
 #pandoc "$org" "$tmp-meta.yaml" \
-    --from=org \
-    --to=html \
+    -f org \
+    -t html \
     --template="$viewdir/template.html" \
     --standalone \
     --mathjax |
