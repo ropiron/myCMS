@@ -23,12 +23,12 @@ rm -f "$datadir/INIT"
 ### CREATE TIMESTAMP FILES IF NOT EXIST ###
 cat $tmp-git-change |
 while read d ; do
-    [ -f "$contentsdir/$d/main.md" ] || rm -Rf "$datadir/$d"
-    [ -f "$contentsdir/$d/main.md" ] || continue
+    [ -f "$contentsdir/$d/main.org" ] || rm -Rf "$datadir/$d"
+    [ -f "$contentsdir/$d/main.org" ] || continue
 
     mkdir -p "$datadir/$d"           &&
     ### ADD TIME FILES ###
-    git log -p "$contentsdir/$d/main.md" |
+    git log -p "$contentsdir/$d/main.org" |
     grep '^Date:'                        |
     awk '{print $2,$3,$4,$5,$6}'         |
     date -f - "+%Y-%m-%d %H:%M:%S"       |
@@ -37,7 +37,7 @@ while read d ; do
         'NR==1{print > mf}END{print > cf}'
 
     ### MAKE SOME SNIPS ###
-    grep -m 1 '^# ' "$contentsdir/$d/main.md"		|
+    grep -m 1 '^# ' "$contentsdir/$d/main.org"		|
     sed 's/^#  *//'					|
     awk '{if(/^$/){print "NO TITLE"}else{print}}
          END{if(NR==0){print "NO TITLE"}}'		|
@@ -81,7 +81,7 @@ cat $tmp-git-change                             |
 xargs -I@ -n 1 grep -C1 "@$" $tmp-new-old-list	|
 sort -u                                         |
 while read ymd hms d ; do
-	[ -f "$contentsdir/$d/main.md" ] || continue
+	[ -f "$contentsdir/$d/main.org" ] || continue
 	grep -C1 "$d$" "$datadir/post_list"     			|
 	awk '{print $3}'                        			|
 	sed -n -e '1p' -e '$p'                         			|
@@ -94,9 +94,9 @@ done
 ### MAKE KEYWORD LIST ###
 cd "$contentsdir"
 cat $tmp-list                    |
-awk '{print $3 "/main.md"}'      |
+awk '{print $3 "/main.org"}'      |
 xargs grep -H -m 1 '^Keywords:'  |
-sed 's;/main.md:Keywords:; ;'    |
+sed 's;/main.org:Keywords:; ;'    |
 sed 's/ *, */,/g'                |
 sed 's/  */ /g'                  |
 awk '{gsub(/^/,",",$2);print}'   |
@@ -106,9 +106,9 @@ mv $tmp-keyword_list "$datadir/keyword_list"
 ### MAKE SEARCH FILE ###
 cd "$contentsdir"
 cat $tmp-list                    |
-awk '{print $3 "/main.md"}'      |
+awk '{print $3 "/main.org"}'      |
 xargs grep -H ^			 |
-sed 's;/main.md:; ;'             |
+sed 's;/main.org:; ;'             |
 awk 'a!=$1{c=0;a=$1}c>=2{print}$2~/^---$/{c++}' |
 awk '$2~/^\*$|^#*$/{$2=""}{print}'		|
 awk 'NF>1'			> $tmp-all
