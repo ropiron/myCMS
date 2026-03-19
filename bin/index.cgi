@@ -30,5 +30,5 @@ FIN
 ### OUTPUT ###
 #pandoc --template="$viewdir/template.html"	\
 #    -f markdown "$org" "$tmp-meta.yaml"  |
-pandoc "$org" --from=org --to=html --template="$viewdir/template.html" --standalone --mathjax --lua-filter="$viewdir/add-img-class.lua" |
+pandoc "$org" --from=org --to=html --template="$viewdir/template.html" --standalone --mathjax --lua-filter="$viewdir/add-img-class.lua" --metadata-file=$tmp-meta.yaml |
 sed -r "/:\/\/|=\"\//!s;<(img src|a href)=\";&/$dir/;"
