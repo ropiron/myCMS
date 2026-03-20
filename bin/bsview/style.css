@@ -1,0 +1,10 @@
+/* style.css に追加 */
+table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+}
