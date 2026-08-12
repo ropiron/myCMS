@@ -37,17 +37,37 @@ while read d ; do
         'NR==1{print > mf}END{print > cf}'
 
     ### MAKE SOME SNIPS ###
-    grep -m 1 '^# ' "$contentsdir/$d/main.org"		|
-    sed 's/^#  *//'					|
-    awk '{if(/^$/){print "NO TITLE"}else{print}}
-         END{if(NR==0){print "NO TITLE"}}'		|
-    tee "$datadir/$d/title"				|
+    # Title extraction (org: #+TITLE:, then fallback: '# ')
+    (
+      grep -m 1 -Ei '^[[:space:]]*#\+TITLE:[[:space:]]*' "$contentsdir/$d/main.org" |
+      sed -E 's/^[[:space:]]*#\+TITLE:[[:space:]]*//I'
+    ) |
+    awk '{if(NR==0){print ""} else {print $0}}' > /dev/null
+
+    title_from_org=$(
+      grep -m 1 -Ei '^[[:space:]]*#\+TITLE:[[:space:]]*' "$contentsdir/$d/main.org" |
+      sed -E 's/^[[:space:]]*#\+TITLE:[[:space:]]*//I'
+    )
+
+    if [ -z "$title_from_org" ]; then
+      title_from_org=$(
+        grep -m 1 '^# ' "$contentsdir/$d/main.org" |
+        sed 's/^#  *//' |
+        awk '{if(/^$/){print "NO TITLE"}else{print}} END{if(NR==0){print "NO TITLE"}}'
+      )
+    fi
+
+    # Normalize: if org title line exists but is empty, treat as NO TITLE
+    title_from_org=$(printf '%s' "$title_from_org" | awk '{if($0==""){print "NO TITLE"} else {print $0}}')
+
+    printf '%s\n' "$title_from_org" |
+    tee "$datadir/$d/title" |
     awk -v d="$d" '{gsub(/s\//,"=",d);
     	print "<a href=\"/?" d "\">" $0 "</a>"}' > "$datadir/$d/link"
-    
+
     ymd=$(sed 's/ .*//' < "$datadir/$d/created_time")
     sed "s;</a>; ($ymd)&;" "$datadir/$d/link" > "$datadir/$d/link_date"
-    
+
     touch "$datadir/$d/nav"
 done
 ### MAKE POST/PAGE LIST ###
